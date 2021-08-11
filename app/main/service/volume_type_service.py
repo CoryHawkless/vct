@@ -11,10 +11,8 @@ def save_new_volume_type(data: Dict[str, str]) -> Tuple[Dict[str, str], int]:
     if not volume_type:
         new_volume_type = Volume_Type(
             public_id=str(uuid.uuid4()),
-            email=data['email'],
-            volume_typename=data['volume_typename'],
-            password=data['password'],
-            registered_on=datetime.datetime.utcnow()
+            name=data['name'],
+            created_at=datetime.datetime.utcnow()
         )
         save_changes(new_volume_type)
         return new_volume_type

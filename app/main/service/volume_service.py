@@ -14,7 +14,7 @@ def save_new_volume(data: Dict[str, str]) -> Tuple[Dict[str, str], int]:
             email=data['email'],
             volumename=data['volumename'],
             password=data['password'],
-            registered_on=datetime.datetime.utcnow()
+            created_at=datetime.datetime.utcnow()
         )
         save_changes(new_volume)
         return (new_volume)

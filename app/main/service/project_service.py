@@ -7,23 +7,15 @@ from typing import Dict, Tuple
 
 
 def save_new_project(data: Dict[str, str]) -> Tuple[Dict[str, str], int]:
-    project = Project.query.filter_by(email=data['email']).first()
-    if not project:
-        new_project = Project(
-            public_id=str(uuid.uuid4()),
-            email=data['email'],
-            projectname=data['projectname'],
-            password=data['password'],
-            registered_on=datetime.datetime.utcnow()
-        )
-        save_changes(new_project)
-        return new_project
-    else:
-        response_object = {
-            'status': 'fail',
-            'message': 'Project already exists. Please Log in.',
-        }
-        return response_object, 409
+    new_project = Project(
+        id=str(uuid.uuid4()),
+        name=data['name'],
+        description=data['description'],
+        created_at=datetime.datetime.utcnow()
+    )
+    save_changes(new_project)
+    return new_project
+
 
 
 def get_all_projects():
@@ -32,9 +24,6 @@ def get_all_projects():
 
 def get_a_project(public_id):
     return Project.query.filter_by(public_id=public_id).first()
-
-
-
 
 def save_changes(data: Project) -> None:
     db.session.add(data)
