@@ -21,7 +21,7 @@ def token_required(f) -> Callable:
     return decorated
 
 
-def admin_token_required(f: Callable) -> Callable:
+def admin_role_required(f: Callable) -> Callable:
     @wraps(f)
     def decorated(*args, **kwargs):
 

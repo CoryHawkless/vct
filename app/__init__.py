@@ -3,6 +3,7 @@ from flask import Blueprint
 
 from .main.controller.user_controller import api as user_ns
 from .main.controller.auth_controller import api as auth_ns
+from .main.controller.volume_controller import api as volume_ns
 
 blueprint = Blueprint('api', __name__)
 authorizations = {
@@ -23,4 +24,5 @@ api = Api(
 )
 
 api.add_namespace(user_ns, path='/user')
+api.add_namespace(volume_ns, path='/volumes')
 api.add_namespace(auth_ns)
