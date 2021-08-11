@@ -2,45 +2,45 @@ from flask import request
 from flask_restx import Resource
 
 from app.main.util.decorator import admin_role_required
-from ..util.dto import UserDto
-from ..service.user_service import save_new_user, get_all_users, get_a_user
+from ..util.dto import ProjectDto
+from ..service.project_service import save_new_project, get_all_projects, get_a_project
 from typing import Dict, Tuple
 
-api = UserDto.api
-_user = UserDto.user
+api = ProjectDto.api
+_project = ProjectDto.project
 
 
 @api.route('/')
-class UserList(Resource):
-    @api.doc('list_of_registered_users')
+class ProjectList(Resource):
+    @api.doc('list_of_registered_projects')
     @admin_role_required
-    @api.marshal_list_with(_user, envelope='data')
+    @api.marshal_list_with(_project, envelope='data')
     def get(self):
-        """List all registered users"""
-        return get_all_users()
+        """List all registered projects"""
+        return get_all_projects()
 
-    @api.expect(_user, validate=True)
-    @api.response(201, 'User successfully created.')
-    @api.doc('create a new user')
+    @api.expect(_project, validate=True)
+    @api.response(201, 'Project successfully created.')
+    @api.doc('create a new project')
     def post(self) -> Tuple[Dict[str, str], int]:
-        """Creates a new User """
+        """Creates a new Project """
         data = request.json
-        return save_new_user(data=data)
+        return save_new_project(data=data)
 
 
 @api.route('/<public_id>')
-@api.param('public_id', 'The User identifier')
-@api.response(404, 'User not found.')
-class User(Resource):
-    @api.doc('get a user')
-    @api.marshal_with(_user)
+@api.param('public_id', 'The Project identifier')
+@api.response(404, 'Project not found.')
+class Project(Resource):
+    @api.doc('get a project')
+    @api.marshal_with(_project)
     def get(self, public_id):
-        """get a user given its identifier"""
-        user = get_a_user(public_id)
-        if not user:
+        """get a project given its identifier"""
+        project = get_a_project(public_id)
+        if not project:
             api.abort(404)
         else:
-            return user
+            return project
 
 
 

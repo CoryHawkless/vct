@@ -76,7 +76,7 @@ class TestAuthBlueprint(BaseTestCase):
             self.assertEqual(response.status_code, 200)
 
     def test_non_registered_user_login(self):
-        """ Test for login of non-registered user """
+        """ zzzTest for login of non-registered user """
         with self.client:
             response = login_user(self)
             data = json.loads(response.data.decode())

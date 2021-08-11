@@ -2,57 +2,41 @@ import uuid
 import datetime
 
 from app.main import db
-from app.main.model.user import User
+from app.main.model.project import Project
 from typing import Dict, Tuple
 
 
-def save_new_user(data: Dict[str, str]) -> Tuple[Dict[str, str], int]:
-    user = User.query.filter_by(email=data['email']).first()
-    if not user:
-        new_user = User(
+def save_new_project(data: Dict[str, str]) -> Tuple[Dict[str, str], int]:
+    project = Project.query.filter_by(email=data['email']).first()
+    if not project:
+        new_project = Project(
             public_id=str(uuid.uuid4()),
             email=data['email'],
-            username=data['username'],
+            projectname=data['projectname'],
             password=data['password'],
             registered_on=datetime.datetime.utcnow()
         )
-        save_changes(new_user)
-        return generate_token(new_user)
+        save_changes(new_project)
+        return new_project
     else:
         response_object = {
             'status': 'fail',
-            'message': 'User already exists. Please Log in.',
+            'message': 'Project already exists. Please Log in.',
         }
         return response_object, 409
 
 
-def get_all_users():
-    return User.query.all()
+def get_all_projects():
+    return Project.query.all()
 
 
-def get_a_user(public_id):
-    return User.query.filter_by(public_id=public_id).first()
+def get_a_project(public_id):
+    return Project.query.filter_by(public_id=public_id).first()
 
 
-def generate_token(user: User) -> Tuple[Dict[str, str], int]:
-    try:
-        # generate the auth token
-        auth_token = User.encode_auth_token(user.id)
-        response_object = {
-            'status': 'success',
-            'message': 'Successfully registered.',
-            'Authorization': auth_token.decode()
-        }
-        return response_object, 201
-    except Exception as e:
-        response_object = {
-            'status': 'fail',
-            'message': 'Some error occurred. Please try again.'
-        }
-        return response_object, 401
 
 
-def save_changes(data: User) -> None:
+def save_changes(data: Project) -> None:
     db.session.add(data)
     db.session.commit()
 
