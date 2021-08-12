@@ -1,19 +1,13 @@
 
 from .. import db, flask_bcrypt
-import datetime
-from app.main.model.blacklist import BlacklistToken
-from ..config import key
-import jwt
-from typing import Union
+from ..util import commonModelAttributes
 
 
-class Project(db.Model):
+class Project(db.Model,commonModelAttributes.CommonModelAttributes):
     """ Project Model for storing project related details """
     __tablename__ = "project"
 
-    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     name = db.Column(db.String(255), unique=True, nullable=False)
-    created_at = db.Column(db.DateTime, nullable=False)
     description = db.Column(db.String(100), unique=True)
 
 

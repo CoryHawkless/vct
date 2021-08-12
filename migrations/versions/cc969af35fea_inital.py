@@ -1,8 +1,8 @@
-"""added stuff
+"""Inital
 
-Revision ID: 10320c1a5005
+Revision ID: cc969af35fea
 Revises: 
-Create Date: 2021-08-11 23:56:14.550218
+Create Date: 2021-08-12 23:40:43.279130
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = '10320c1a5005'
+revision = 'cc969af35fea'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -26,39 +26,40 @@ def upgrade():
     sa.UniqueConstraint('token')
     )
     op.create_table('project',
+    sa.Column('created_at', sa.DateTime(), nullable=True),
+    sa.Column('deleted_at', sa.DateTime(), nullable=True),
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('name', sa.String(length=255), nullable=False),
-    sa.Column('created_at', sa.DateTime(), nullable=False),
     sa.Column('description', sa.String(length=100), nullable=True),
     sa.PrimaryKeyConstraint('id'),
     sa.UniqueConstraint('description'),
     sa.UniqueConstraint('name')
     )
     op.create_table('user',
+    sa.Column('created_at', sa.DateTime(), nullable=True),
+    sa.Column('deleted_at', sa.DateTime(), nullable=True),
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('email', sa.String(length=255), nullable=False),
     sa.Column('registered_on', sa.DateTime(), nullable=False),
     sa.Column('admin', sa.Boolean(), nullable=False),
-    sa.Column('public_id', sa.String(length=100), nullable=True),
     sa.Column('username', sa.String(length=50), nullable=True),
     sa.Column('password_hash', sa.String(length=100), nullable=True),
     sa.PrimaryKeyConstraint('id'),
     sa.UniqueConstraint('email'),
-    sa.UniqueConstraint('public_id'),
     sa.UniqueConstraint('username')
     )
     op.create_table('volume_types',
+    sa.Column('created_at', sa.DateTime(), nullable=True),
+    sa.Column('deleted_at', sa.DateTime(), nullable=True),
     sa.Column('id', sa.Integer(), nullable=False),
-    sa.Column('created_at', sa.DateTime(), nullable=False),
-    sa.Column('deleted', sa.Boolean(), nullable=False),
     sa.Column('name', sa.String(length=128), nullable=True),
     sa.Column('description', sa.String(length=256), nullable=True),
     sa.PrimaryKeyConstraint('id')
     )
     op.create_table('volumes',
+    sa.Column('created_at', sa.DateTime(), nullable=True),
+    sa.Column('deleted_at', sa.DateTime(), nullable=True),
     sa.Column('id', sa.Integer(), nullable=False),
-    sa.Column('created_at', sa.DateTime(), nullable=False),
-    sa.Column('deleted', sa.Boolean(), nullable=False),
     sa.Column('name', sa.String(length=128), nullable=True),
     sa.Column('description', sa.String(length=256), nullable=True),
     sa.Column('type', sa.String(length=64), nullable=False),
