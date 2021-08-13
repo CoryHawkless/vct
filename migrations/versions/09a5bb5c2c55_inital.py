@@ -1,8 +1,8 @@
 """Inital
 
-Revision ID: cc969af35fea
+Revision ID: 09a5bb5c2c55
 Revises: 
-Create Date: 2021-08-12 23:40:43.279130
+Create Date: 2021-08-13 14:30:32.392598
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = 'cc969af35fea'
+revision = '09a5bb5c2c55'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -25,7 +25,7 @@ def upgrade():
     sa.PrimaryKeyConstraint('id'),
     sa.UniqueConstraint('token')
     )
-    op.create_table('project',
+    op.create_table('projects',
     sa.Column('created_at', sa.DateTime(), nullable=True),
     sa.Column('deleted_at', sa.DateTime(), nullable=True),
     sa.Column('id', sa.Integer(), nullable=False),
@@ -53,7 +53,6 @@ def upgrade():
     sa.Column('deleted_at', sa.DateTime(), nullable=True),
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('name', sa.String(length=128), nullable=True),
-    sa.Column('description', sa.String(length=256), nullable=True),
     sa.PrimaryKeyConstraint('id')
     )
     op.create_table('volumes',
@@ -62,8 +61,12 @@ def upgrade():
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('name', sa.String(length=128), nullable=True),
     sa.Column('description', sa.String(length=256), nullable=True),
-    sa.Column('type', sa.String(length=64), nullable=False),
+    sa.Column('type', sa.Integer(), nullable=False),
     sa.Column('size', sa.Integer(), nullable=False),
+    sa.Column('id_on_disk', sa.String(length=256), nullable=False),
+    sa.Column('project_id', sa.Integer(), nullable=False),
+    sa.ForeignKeyConstraint(['project_id'], ['projects.id'], ),
+    sa.ForeignKeyConstraint(['type'], ['volume_types.id'], ),
     sa.PrimaryKeyConstraint('id')
     )
     # ### end Alembic commands ###
@@ -74,6 +77,6 @@ def downgrade():
     op.drop_table('volumes')
     op.drop_table('volume_types')
     op.drop_table('user')
-    op.drop_table('project')
+    op.drop_table('projects')
     op.drop_table('blacklist_tokens')
     # ### end Alembic commands ###
