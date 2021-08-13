@@ -24,8 +24,8 @@ with app.app_context():
     vt.save()
 
 
-    single=Volume_Type.query.first()
-    # print(single)
+    single=Volume_Type.query.all()
+    print(single)
     #
     v=Volume()
     v.name="Volume 1"

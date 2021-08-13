@@ -15,7 +15,7 @@ class ProjectDto:
     project = api.model('project', {
         'name': fields.String(required=True, description='Name'),
         'description': fields.String(required=True, description='Description'),
-        'id': fields.String(required=True, description='Project ID'),
+        'id': fields.Integer(required=True, description='Project ID'),
     })
 
 
@@ -41,7 +41,8 @@ class VolumeTypeDto:
     api = Namespace('volume_types', description='Volume Types related operations')
     volume_type = api.model('volume_type', {
 
+        'id': fields.Integer(required=True, description='Project ID'),
         'name': fields.String(required=True, description='Volume Type name'),
-        'description': fields.String(required=True, description='Optional description'),
-        'deleted': fields.Boolean(description='Deleted?')
+        'created_at': fields.DateTime(description='Created Timestamp'),
+        'deleted_at': fields.DateTime(description='Deleted Timestamp')
     })

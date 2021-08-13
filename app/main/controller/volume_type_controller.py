@@ -13,7 +13,7 @@ _volume_type = VolumeTypeDto.volume_type
 @api.route('/volume_types')
 class VolumeTypeList(Resource):
     @api.doc('list_of_registered_volume_types')
-    @admin_role_required
+    # @admin_role_required
     @api.marshal_list_with(_volume_type, envelope='data')
     def get(self):
         """List all registered volumes"""

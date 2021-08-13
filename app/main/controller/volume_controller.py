@@ -13,7 +13,7 @@ _volume = VolumeDto.volume
 @api.route('/volumes')
 class VolumeList(Resource):
     @api.doc('list_of_registered_volumes')
-    @admin_role_required
+    # @admin_role_required
     @api.marshal_list_with(_volume, envelope='data')
     def get(self):
         """List all registered volumes"""

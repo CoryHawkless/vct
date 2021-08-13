@@ -7,7 +7,6 @@ class Volume_Type(db.Model,commonModelAttributes.CommonModelAttributes):
     __tablename__ = "volume_types"
 
     name =                      db.Column(db.String(128))
-    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
 
 
     def __repr__(self):
