@@ -15,7 +15,7 @@ with app.app_context():
     db.create_all()
 
     p=Project()
-    p.name="Project1"+str(randrange(10))
+    p.name="Project1"+str(randrange(1000))
     p.save()
 
     vt = Volume_Type()
@@ -29,10 +29,12 @@ with app.app_context():
     #
     v=Volume()
     v.name="Volume 1"
-    v.id_on_disk="SBSP"
+    v.name_on_disk="SBSP"
     v.project_id=p.id
-    v.type=vt.id
+    v.type_id=vt.id
     print(v.save())
+    print (v.project)
+    print (v.type)
     #
     # # db.session.add(p)
     # db.session.add(vt)

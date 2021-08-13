@@ -11,7 +11,7 @@ class Volume_Type(db.Model,commonModelAttributes.CommonModelAttributes):
 
 
     def __repr__(self):
-        # return "<Volume_Type '{}'>".format(self.id)
-        return str(self.id)
+        return "<Volume_Type '{}'>".format(self.id)
+        # return str(self.id)
 
 

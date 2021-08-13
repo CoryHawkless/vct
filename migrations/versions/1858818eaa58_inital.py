@@ -1,8 +1,8 @@
 """Inital
 
-Revision ID: 09a5bb5c2c55
+Revision ID: 1858818eaa58
 Revises: 
-Create Date: 2021-08-13 14:30:32.392598
+Create Date: 2021-08-14 09:10:54.831118
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = '09a5bb5c2c55'
+revision = '1858818eaa58'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -51,8 +51,8 @@ def upgrade():
     op.create_table('volume_types',
     sa.Column('created_at', sa.DateTime(), nullable=True),
     sa.Column('deleted_at', sa.DateTime(), nullable=True),
-    sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('name', sa.String(length=128), nullable=True),
+    sa.Column('id', sa.Integer(), nullable=False),
     sa.PrimaryKeyConstraint('id')
     )
     op.create_table('volumes',
@@ -61,12 +61,12 @@ def upgrade():
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('name', sa.String(length=128), nullable=True),
     sa.Column('description', sa.String(length=256), nullable=True),
-    sa.Column('type', sa.Integer(), nullable=False),
+    sa.Column('type_id', sa.Integer(), nullable=False),
     sa.Column('size', sa.Integer(), nullable=False),
-    sa.Column('id_on_disk', sa.String(length=256), nullable=False),
+    sa.Column('name_on_disk', sa.String(length=256), nullable=False),
     sa.Column('project_id', sa.Integer(), nullable=False),
     sa.ForeignKeyConstraint(['project_id'], ['projects.id'], ),
-    sa.ForeignKeyConstraint(['type'], ['volume_types.id'], ),
+    sa.ForeignKeyConstraint(['type_id'], ['volume_types.id'], ),
     sa.PrimaryKeyConstraint('id')
     )
     # ### end Alembic commands ###
