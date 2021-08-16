@@ -1,7 +1,5 @@
 from functools import wraps
-
 from flask import request
-
 from app.main.service.auth_helper import Auth
 from typing import Callable
 

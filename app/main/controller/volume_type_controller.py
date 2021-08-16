@@ -10,7 +10,7 @@ api = VolumeTypeDto.api
 _volume_type = VolumeTypeDto.volume_type
 
 
-@api.route('/volume_types')
+@api.route('/')
 class VolumeTypeList(Resource):
     @api.doc('list_of_registered_volume_types')
     # @admin_role_required
@@ -28,14 +28,14 @@ class VolumeTypeList(Resource):
         return save_new_volume_type(data=data)
 
 
-@api.route('volume_types/<volume_type_id>')
-@api.param('public_id', 'The Volume Type identifier')
+@api.route('/<volume_type_id>')
+@api.param('volume_type_id', 'The Volume Type identifier')
 @api.response(404, 'Volume Type not found.')
 class Volume_Type(Resource):
     @api.doc('get a volume type')
     @api.marshal_with(_volume_type)
     def get(self, volume_type_id):
-        """get a volume type given its identifier"""
+        """Get a volume type given its identifier"""
         volume_type = get_a_volume_type(volume_type_id)
         if not volume_type:
             api.abort(404)

@@ -9,12 +9,13 @@ class Volume(db.Model,commonModelAttributes.CommonModelAttributes):
 
     name =                      db.Column(db.String(128))
     description =               db.Column(db.String(256))
-    type_id =                      db.Column(db.Integer, db.ForeignKey('volume_types.id'),
+    type_id =                   db.Column(db.Integer, db.ForeignKey('volume_types.id'),
                                     nullable=False)
     size =                      db.Column(db.Integer,nullable=False,default=0)
-    name_on_disk =               db.Column(db.String(256),nullable=False)
+    name_on_disk =              db.Column(db.String(256),nullable=False)
     project_id =                db.Column(db.Integer, db.ForeignKey('projects.id'),
                                     nullable=False)
+
 
     def __repr__(self):
         return "<Volume '{}'>".format(self.id)
@@ -28,7 +29,7 @@ class Volume(db.Model,commonModelAttributes.CommonModelAttributes):
         )
 
     @declared_attr
-    def type(cls):
+    def volume_type(cls):
         return db.relationship(
             'Volume_Type',
             primaryjoin='Volume_Type.id == %s.type_id' % cls.__name__,

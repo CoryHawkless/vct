@@ -1,23 +1,27 @@
 import uuid
 import datetime
 
+import flask
+
 from app.main import db
 from app.main.model.volume import Volume
 from typing import Dict, Tuple
 
 
 def save_new_volume(data: Dict[str, str]) -> Tuple[Dict[str, str], int]:
-    volume = Volume.query.filter_by(email=data['email']).first()
+    volume = Volume.query.filter_by(name=data['name']).first()
     if not volume:
         new_volume = Volume(
-            public_id=str(uuid.uuid4()),
-            email=data['email'],
-            volumename=data['volumename'],
-            password=data['password'],
-            created_at=datetime.datetime.utcnow()
+            name=data['name'],
+            size=data['size'],
+            description=data['description'],
+            type_id=data['type_id'],
+            name_on_disk="",
+            project_id=5,
         )
-        save_changes(new_volume)
-        return (new_volume)
+
+        new_volume.save()
+        return flask.jsonify(new_volume.to_dict())
     else:
         response_object = {
             'status': 'fail',
@@ -31,7 +35,7 @@ def get_all_volumes():
 
 
 def get_a_volume(public_id):
-    return Volume.query.filter_by(public_id=public_id).first()
+    return Volume.query.filter_by(id=public_id).first()
 
 
 

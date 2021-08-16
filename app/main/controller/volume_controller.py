@@ -10,9 +10,11 @@ api = VolumeDto.api
 _volume = VolumeDto.volume
 
 
-@api.route('/volumes')
+
+@api.route('/')
 class VolumeList(Resource):
     @api.doc('list_of_registered_volumes')
+
     # @admin_role_required
     @api.marshal_list_with(_volume, envelope='data')
     def get(self):
@@ -28,15 +30,15 @@ class VolumeList(Resource):
         return save_new_volume(data=data)
 
 
-@api.route('volumes/<volume_id>')
-@api.param('public_id', 'The Volume identifier')
+@api.route('/<volume_id>')
+@api.param('volume_id', 'The Volume identifier')
 @api.response(404, 'Volume not found.')
 class Volume(Resource):
     @api.doc('get a volume')
     @api.marshal_with(_volume)
-    def get(self, public_id):
-        """get a volume given its identifier"""
-        volume = get_a_volume(public_id)
+    def get(self, volume_id):
+        """Get a volume given its identifier"""
+        volume = get_a_volume(volume_id)
         if not volume:
             api.abort(404)
         else:
