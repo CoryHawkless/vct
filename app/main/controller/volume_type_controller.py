@@ -33,14 +33,11 @@ class VolumeTypeList(Resource):
 @api.response(404, 'Volume Type not found.')
 class Volume_Type(Resource):
     @api.doc('get a volume type')
-    @api.marshal_with(_volume_type)
+    # @api.marshal_with(_volume_type)
     def get(self, volume_type_id):
         """Get a volume type given its identifier"""
-        volume_type = get_a_volume_type(volume_type_id)
-        if not volume_type:
-            api.abort(404)
-        else:
-            return volume_type
+        this_volume_type = get_a_volume_type(volume_type_id)
+        return this_volume_type
 
 
 

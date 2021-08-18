@@ -33,16 +33,14 @@ class VolumeList(Resource):
 @api.route('/<volume_id>')
 @api.param('volume_id', 'The Volume identifier')
 @api.response(404, 'Volume not found.')
+@api.response(200, 'Volume found.')
 class Volume(Resource):
     @api.doc('get a volume')
-    @api.marshal_with(_volume)
+    # @api.marshal_with(_volume)
     def get(self, volume_id):
         """Get a volume given its identifier"""
-        volume = get_a_volume(volume_id)
-        if not volume:
-            api.abort(404)
-        else:
-            return volume
+        this_volume = get_a_volume(volume_id)
+        return this_volume
 
 
 

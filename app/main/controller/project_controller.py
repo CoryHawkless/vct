@@ -28,19 +28,15 @@ class ProjectList(Resource):
         return save_new_project(data=data)
 
 
-@api.route('/<public_id>')
-@api.param('public_id', 'The Project identifier')
+@api.route('/<project_id>')
+@api.param('project_id', 'The Project identifier')
 @api.response(404, 'Project not found.')
 class Project(Resource):
-    @api.doc('get a project')
-    @api.marshal_with(_project)
-    def get(self, public_id):
+    @api.doc('Get a project')
+    # @api.marshal_with(_project)
+    def get(self, project_id):
         """get a project given its identifier"""
-        project = get_a_project(public_id)
-        if not project:
-            api.abort(404)
-        else:
-            return project
-
+        this_project = get_a_project(project_id)
+        return this_project
 
 

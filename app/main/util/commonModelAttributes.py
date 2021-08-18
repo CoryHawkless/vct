@@ -17,31 +17,22 @@ class CommonModelAttributes(object):
         return db.session.commit()
 
     @validates('created_at')
-    def validates_username(self, key, value):
+    def validates_created_at(self, key, value):
         if self.created_at:  # Field already exists
             raise ValueError('created_at cannot be modified.')
         return value
 
     @validates('id')
-    def validates_username(self, key, value):
+    def validates_id(self, key, value):
         if self.id:  # Field already exists
             raise ValueError('id cannot be modified.')
         return value
 
-    def serialise(self):
-        """Return a dictionary representation of this model."""
-        ret_data = {}
-        print("\nSerialising")
-        print (self.__dict__.items())
-        for attr, value in self.__dict__.items():
-            if not attr.startswith("_"):
-                ret_data[attr]= str(value)
+    def to_dict(self, show=None, _hide=None, _path=None):
+        if _hide is None:
+            _hide = []
 
-        return ret_data
-        # return json.dumps(ret_data)
-
-    def to_dict(self, show=None, _hide=[], _path=None):
-        """Return a dictionary representation of this model.
+        """Return a dictionary representation of this model. 
         Stolen from https://wakatime.com/blog/32-flask-part-1-sqlalchemy-models-to-json
         I removed the requirement to have 'default' fields set, this function will return all fields
         """
