@@ -1,3 +1,5 @@
+from datetime import datetime
+
 import flask
 
 from app.main import db
@@ -12,6 +14,8 @@ def save_new_volume_type(data: Dict[str, str]) -> Tuple[Dict[str, str], int]:
         new_volume_type = Volume_Type(
             name=data['name'],
             size=data['name'],
+            created_at=datetime.datetime.utcnow()
+
         )
         new_volume_type.save()
         return flask.jsonify(new_volume_type.to_dict())

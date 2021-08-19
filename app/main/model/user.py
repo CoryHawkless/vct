@@ -14,7 +14,6 @@ class User(db.Model,commonModelAttributes.CommonModelAttributes):
 
     email = db.Column(db.String(255), unique=True, nullable=False)
     registered_on = db.Column(db.DateTime, nullable=False,default=datetime.datetime.now())
-    admin = db.Column(db.Boolean, nullable=False, default=False)
     username = db.Column(db.String(50), unique=True)
     password_hash = db.Column(db.String(100))
 
@@ -69,4 +68,4 @@ class User(db.Model,commonModelAttributes.CommonModelAttributes):
             return 'Invalid token. Please log in again.'
 
     def __repr__(self):
-        return "<User '{}'>".format(self.username)
+        return "<User '{}'>".format(self.id)

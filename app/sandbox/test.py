@@ -23,3 +23,6 @@ with app.app_context():
         print(query1.first().to_dict())
     else:
         pass
+
+    query = Volume.query.filter_by(project_id=15)
+    print(query.all())

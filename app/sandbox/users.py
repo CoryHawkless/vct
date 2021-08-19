@@ -14,8 +14,8 @@ x="1a"
 
 with app.app_context():
     newUser=User()
-    newUser.email="cory@hawkless.id.au"
+    newUser.email="joe@none.com"
     newUser.password="password"
-    newUser.username="cory"
+    newUser.username="joe"
     newUser.admin=1
     newUser.save()

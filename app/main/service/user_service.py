@@ -14,7 +14,8 @@ def save_new_user(data: Dict[str, str]) -> Tuple[Dict[str, str], int]:
             email=data['email'],
             username=data['username'],
             password=data['password'],
-            registered_on=datetime.datetime.utcnow()
+            registered_on=datetime.datetime.utcnow(),
+            created_at=datetime.datetime.utcnow()
         )
         save_changes(new_user)
         return generate_token(new_user)
@@ -55,4 +56,9 @@ def generate_token(user: User) -> Tuple[Dict[str, str], int]:
 def save_changes(data: User) -> None:
     db.session.add(data)
     db.session.commit()
+
+def checkPermission(user: User,role: str,project_ID: int)-> bool:
+    print(user)
+    return True
+
 

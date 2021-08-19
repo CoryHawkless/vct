@@ -1,7 +1,6 @@
 from flask import request
 from flask_restx import Resource
 
-from app.main.util.decorator import admin_role_required
 from ..util.dto import ProjectDto
 from ..service.project_service import save_new_project, get_all_projects, get_a_project
 from typing import Dict, Tuple
@@ -13,7 +12,6 @@ _project = ProjectDto.project
 @api.route('/')
 class ProjectList(Resource):
     @api.doc('list_of_registered_projects')
-    @admin_role_required
     @api.marshal_list_with(_project, envelope='data')
     def get(self):
         """List all registered projects"""

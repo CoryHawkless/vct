@@ -4,6 +4,10 @@ from sqlalchemy import engine_from_config, pool
 from logging.config import fileConfig
 import logging
 
+# Import models here that arent imported elsehwere to allow the migration to run
+from app.main.model.role_assignment import RoleAssignment
+
+
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.
 config = context.config

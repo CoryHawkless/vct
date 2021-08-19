@@ -8,7 +8,7 @@ import datetime
 
 class CommonModelAttributes(object):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    created_at = db.Column(db.DateTime, default=datetime.datetime.now())
+    created_at = db.Column(db.DateTime, nullable=False, default=datetime.datetime.now())
     deleted_at = db.Column(db.DateTime, nullable=True)
 
     def save(self):
