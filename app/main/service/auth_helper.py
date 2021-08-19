@@ -1,5 +1,5 @@
 from app.main.model.user import User
-from ..service.blacklist_service import save_token
+from ..service.blacklist_service import blacklist_token
 from typing import Dict, Tuple
 
 
@@ -35,16 +35,12 @@ class Auth:
             return response_object, 500
 
     @staticmethod
-    def logout_user(data: str) -> Tuple[Dict[str, str], int]:
-        if data:
-            auth_token = data.split(" ")[1]
-        else:
-            auth_token = ''
+    def logout_user(auth_token: str) -> Tuple[Dict[str, str], int]:
         if auth_token:
             resp = User.decode_auth_token(auth_token)
             if not isinstance(resp, str):
                 # mark the token as blacklisted
-                return save_token(token=auth_token)
+                return blacklist_token(token=auth_token)
             else:
                 response_object = {
                     'status': 'fail',

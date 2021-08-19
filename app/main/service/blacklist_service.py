@@ -4,7 +4,7 @@ from app.main.model.blacklist import BlacklistToken
 from typing import Dict, Tuple
 
 
-def save_token(token: str) -> Tuple[Dict[str, str], int]:
+def blacklist_token(token: str) -> Tuple[Dict[str, str], int]:
     blacklist_token = BlacklistToken(token=token)
     try:
         # insert the token

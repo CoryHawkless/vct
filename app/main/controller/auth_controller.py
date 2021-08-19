@@ -31,4 +31,15 @@ class LogoutAPI(Resource):
     def post(self) -> Tuple[Dict[str, str], int]:
         # get auth token
         auth_header = request.headers.get('Authorization')
-        return Auth.logout_user(data=auth_header)
+        return Auth.logout_user(auth_header)
+
+@api.route("/user")
+class UserInfo(Resource):
+    """
+    Return user info, useful for checking tokens
+    """
+    @api.doc('Check currently logged in user')
+    def post(self):
+        auth_header = request.headers.get('Authorization')
+        return Auth.get_logged_in_user(request)
+
