@@ -23,6 +23,7 @@ class VolumeList(Resource):
         """List all registered volumes
         Optional parameter=project_id
         """
+
         return flask.jsonify(get_all_volumes(request))
 
     @token_required

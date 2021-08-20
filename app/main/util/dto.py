@@ -41,6 +41,19 @@ class VolumeDto:
         'project_id': fields.Integer(required=True, description='Project ID'),
 
     })
+    
+class NetworkDto:
+    api = Namespace('networks', description='Network related operations')
+    network = api.model('network', {
+        'id': fields.Integer(required=True, description='Project ID'),
+        'created_at': fields.DateTime(description='Created Timestamp'),
+        'deleted_at': fields.DateTime(description='Deleted Timestamp'),
+        'name': fields.String(required=True, description='Network name'),
+        'description': fields.String(required=True, description='Optional description'),
+        'sementation_id': fields.Integer(required=True, description='Network Segmentation ID'),
+        'project_id': fields.Integer(required=True, description='Project ID'),
+
+    })
 
 class VolumeTypeDto:
     api = Namespace('volume_types', description='Volume Types related operations')

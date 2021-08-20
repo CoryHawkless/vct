@@ -87,7 +87,13 @@ def role_required(desired_roles: list):
         def wrapper(*args, **kwargs):
             data = request.json
             user = Auth.get_logged_in_user(request)
-            print(user)
+            if not 'project_id' in data:
+                response_object = {
+                    'status': 'fail',
+                    'message': 'Project ID not supplied',
+                }
+                return response_object, 401
+
             project_id=data['project_id']
             print("This route requires user {} to have role '{}' on project #{}".format(user.username,desired_roles,project_id))
             this_users_roles=RoleAssignment.query.filter_by(user_id=user.id,project_id=project_id).all()
