@@ -11,9 +11,42 @@
 				{
 					"name": "New Volume",
 					"request": {
-						"method": "GET",
+						"auth": {
+							"type": "apikey",
+							"apikey": [
+								{
+									"key": "value",
+									"value": "{{authorization_token}}",
+									"type": "string"
+								},
+								{
+									"key": "key",
+									"value": "authorization",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
 						"header": [],
-						"url": null
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"NewVolumeName\",\n  \"size\": 10,\n  \"description\": \"Some Descriptsion\",\n  \"type_id\": 4,\n  \"project_id\": 4\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/volume/",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"volume",
+								""
+							]
+						}
 					},
 					"response": []
 				},
@@ -25,6 +58,51 @@
 						"url": null
 					},
 					"response": []
+				},
+				{
+					"name": "List all volumes",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "apikey",
+							"apikey": [
+								{
+									"key": "value",
+									"value": "{{authorization_token}}",
+									"type": "string"
+								},
+								{
+									"key": "key",
+									"value": "authorization",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"project_id\":4\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/volume/",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"volume",
+								""
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		},
@@ -32,7 +110,7 @@
 			"name": "Auth",
 			"item": [
 				{
-					"name": "Login",
+					"name": "Login Joe",
 					"event": [
 						{
 							"listen": "test",
@@ -50,7 +128,59 @@
 									"  });",
 									"  pm.test(\"Set Authorization environment variable\", function () {",
 									"       var jsonData = pm.response.json();",
-									"       pm.environment.set(\"authorization\", jsonData.Authorization);",
+									"       pm.environment.set(\"authorization_token\", jsonData.Authorization);",
+									"  });",
+									"  "
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\":\"joe@none.com\",\n    \"password\":\"password\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/auth/login",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Login Cory",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"  pm.test(\"Check response contains Authorization property\", function () {",
+									"       var jsonData = pm.response.json();",
+									"       pm.expect(jsonData.Authorization).to.exist;",
+									"  });",
+									"  pm.test(\"Content-Type is present\", function () {",
+									"       pm.response.to.have.header(\"Content-Type\");",
+									"  });",
+									"  pm.test(\"Successful POST request\", function () {",
+									"       pm.response.to.have.status(200);",
+									"  });",
+									"  pm.test(\"Set Authorization environment variable\", function () {",
+									"       var jsonData = pm.response.json();",
+									"       pm.environment.set(\"authorization_token\", jsonData.Authorization);",
 									"  });",
 									"  "
 								],

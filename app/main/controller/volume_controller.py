@@ -2,7 +2,7 @@ import flask
 from flask import request
 from flask_restx import Resource
 
-from app.main.util.decorator import token_required,role_required
+from app.main.util.decorator import token_required,role_required,project_id_required
 from ..util.dto import VolumeDto
 from ..service.volume_service import save_new_volume, get_all_volumes, get_a_volume
 from typing import Dict, Tuple
@@ -15,8 +15,8 @@ _volume = VolumeDto.volume
 @api.route('/')
 class VolumeList(Resource):
     @token_required
-    @role_required("admin")
-    @role_required("list_all_volumes")
+    @project_id_required
+    @role_required(["list_all_volumes","operator"])
     @api.doc('list_of_registered_volumes')
     # @api.marshal_list_with(_volume, envelope='data')
     def get(self):
@@ -26,7 +26,7 @@ class VolumeList(Resource):
         return flask.jsonify(get_all_volumes(request))
 
     @token_required
-    @role_required("create_volume")
+    @role_required(["create_volume"])
     @api.response(201, 'Volume successfully created.')
     @api.doc('create a new volume')
     def post(self) -> Tuple[Dict[str, str], int]:

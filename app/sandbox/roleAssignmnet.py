@@ -19,14 +19,22 @@ with app.app_context():
     cory=User.query.filter_by(email="cory@hawkless.id.au").first()
     print (cory)
 
-    project=Project.query.filter_by(id=4).first()
+    project=Project.query.filter_by(id=5).first()
     print(project)
 
-    newRA=RoleAssignment()
-    newRA.user=cory
-    newRA.project=project
-    newRA.role="create_volume"
-    newRA.save()
+    # newRA=RoleAssignment()
+    # newRA.user=cory
+    # newRA.project=project
+    # newRA.role="operator"
+    # newRA.save()
+    #
+    # allRAs=RoleAssignment.query.filter_by(user=cory).all()
+    # print(allRAs)
+    new_role_assignment = RoleAssignment(
+        user_id=1,
+        project_id=4,
+        role="god"
+    )
 
-    allRAs=RoleAssignment.query.filter_by(user=cory).all()
-    print(allRAs)
+    new_role_assignment.save()
+    print(new_role_assignment.to_dict())

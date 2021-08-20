@@ -11,7 +11,7 @@ from ..util import commonModelAttributes
 class User(db.Model,commonModelAttributes.CommonModelAttributes):
     """ User Model for storing user related details """
     __tablename__ = "user"
-
+    _hidden_fields=["password","password_hash"]
     email = db.Column(db.String(255), unique=True, nullable=False)
     registered_on = db.Column(db.DateTime, nullable=False,default=datetime.datetime.now())
     username = db.Column(db.String(50), unique=True)

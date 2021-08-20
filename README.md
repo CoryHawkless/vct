@@ -1,11 +1,13 @@
-#### FLASK RESTX BOILER-PLATE WITH JWT
+# newStack API
+An open source solution to the complexities of manaing virtual infrastrucuture
+Very opinionated VM\ Networking and storage orchestration system. By being strongly opinionated we can elimate significant amounts of complexity, this is not a 'one-size-fits-all' solution. It does what it does and nothing else, but this keep the code base clean, simple and stable
 
 ### Terminal commands
 Note: make sure you have `pip` and `virtualenv` installed.
 
     Initial installation: make install
 
-    To run test: make tests
+    To run test: make tests - *Broken
 
     To run application: make run
 
@@ -33,16 +35,7 @@ Make sure to run the initial migration commands to update the database.
     Key: Authorization
     Value: "token_generated_during_login"
 
-    For testing authorization, url for getting all user requires an admin token while url for getting a single
-    user by public_id requires just a regular authentication.
+    Postman examples in postman folder
 
-### Full description and guide ###
+### Reference article ###
 https://medium.freecodecamp.org/structuring-a-flask-restplus-web-service-for-production-builds-c2ec676de563
-
-
-### Contributing
-If you want to contribute to this flask restplus boilerplate, clone the repository and just start making pull requests.
-
-```
-https://github.com/cosmic-byte/flask-restplus-boilerplate.git
-```

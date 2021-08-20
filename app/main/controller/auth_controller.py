@@ -1,3 +1,4 @@
+import flask
 from flask import request
 from flask_restx import Resource
 
@@ -40,6 +41,5 @@ class UserInfo(Resource):
     """
     @api.doc('Check currently logged in user')
     def post(self):
-        auth_header = request.headers.get('Authorization')
-        return Auth.get_logged_in_user(request)
+        return flask.jsonify(Auth.get_logged_in_user(request).to_dict(_hide=['password','password_hash']))
 

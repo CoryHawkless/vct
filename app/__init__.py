@@ -6,6 +6,7 @@ from .main.controller.auth_controller import api as auth_ns
 from .main.controller.volume_controller import api as volume_ns
 from .main.controller.volume_type_controller import api as volume_type_ns
 from .main.controller.project_controller import api as project_ns
+from .main.controller.role_assignment_controller import api as role_assignment_ns
 
 blueprint = Blueprint('api', __name__)
 authorizations = {
@@ -29,4 +30,5 @@ api.add_namespace(user_ns, path='/user')
 api.add_namespace(project_ns, path='/project')
 api.add_namespace(volume_ns, path='/volume')
 api.add_namespace(volume_type_ns, path='/volume_type')
+api.add_namespace(role_assignment_ns, path='/role_assignment')
 api.add_namespace(auth_ns)

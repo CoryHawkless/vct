@@ -17,6 +17,65 @@ def token_required(f) -> Callable:
 
     return decorated
 
+"""
+URL for info on decorators: https://pythonise.com/series/learning-flask/custom-flask-decorators
+"""
+def project_id_required(f) -> Callable:
+    @wraps(f)
+    def decorated(*args, **kwargs):
+
+        data = request.json
+        if 'project_id' in data:
+            try:
+                is_num = int(data['project_id'])
+            except:
+                response_object = {
+                    'status': 'fail',
+                    'message': 'Project ID supplied is not valid',
+                }
+                return response_object, 401
+        else:
+            response_object = {
+                    'status': 'fail',
+                    'message': 'Project ID not supplied',
+            }
+            return response_object, 401
+
+        return f(*args, **kwargs)
+    return decorated
+
+
+def user_id_required(f) -> Callable:
+    @wraps(f)
+    def decorated(*args, **kwargs):
+
+        data = request.json
+        if not type(data)==dict:
+            response_object = {
+                'status': 'fail',
+                'message': 'Supplied data not in correct format',
+            }
+            return response_object, 401
+
+        if 'user_id' in data:
+            try:
+                is_num = int(data['user_id'])
+            except:
+                response_object = {
+                    'status': 'fail',
+                    'message': 'User ID supplied is not valid',
+                }
+                return response_object, 401
+        else:
+            response_object = {
+                    'status': 'fail',
+                    'message': 'User ID not supplied',
+            }
+            return response_object, 401
+
+        return f(*args, **kwargs)
+    return decorated
+
 
 """
 Desired roles is a list of roles, ANY of which will result in a PASS, making this an OR list
