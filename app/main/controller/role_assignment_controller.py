@@ -12,17 +12,17 @@ _role_assignment = RoleAssignmentDto.role_assignment
 
 
 #TODO - Adjust the url to be role_assignments/userid/ and not require the userid in the body of the request
-@api.route('/')
+@api.route('/<user_id>')
 class RoleAssignmentListForUser(Resource):
     @token_required
-    @user_id_required
+    # @user_id_required
     @role_required(["admin"])
     def get(self):
         """List all role assignments for specified user
         Required parameter=user_id
         """
         #TODO: Build a nice wrapper to allow functiosn to return a status code
-        #TODO: Build a wrapper to return responses in a consistent format, eg, always ahs a sucess, fail
+        #TODO: Build a wrapper to return responses in a consistent format, eg, always has a sucess, fail
         response,code=get_roles_for_user(request)
         return flask.jsonify(response)
 
