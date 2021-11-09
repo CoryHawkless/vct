@@ -42,7 +42,7 @@ def generate_token(user: User) -> Tuple[Dict[str, str], int]:
         response_object = {
             'status': 'success',
             'message': 'Successfully registered.',
-            'Authorization': auth_token.decode()
+            'Authorization': str(auth_token)
         }
         return response_object, 201
     except Exception as e:

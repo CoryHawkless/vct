@@ -13,7 +13,6 @@ class CommonModelAttributes(object):
 
     def save(self):
         db.session.add(self)
-
         return db.session.commit()
 
     @validates('created_at')

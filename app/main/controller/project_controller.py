@@ -8,16 +8,17 @@ from typing import Dict, Tuple
 api = ProjectDto.api
 _project = ProjectDto.project
 
-
+#TODO - Ensure that only admin users can list user projects
 @api.route('/')
 class ProjectList(Resource):
+
     @api.doc('list_of_registered_projects')
     @api.marshal_list_with(_project, envelope='data')
     def get(self):
         """List all registered projects"""
         return get_all_projects()
 
-    @api.expect(_project, validate=True)
+    # @api.expect(_project, validate=True)
     @api.response(201, 'Project successfully created.')
     @api.doc('create a new project')
     def post(self) -> Tuple[Dict[str, str], int]:
@@ -25,7 +26,7 @@ class ProjectList(Resource):
         data = request.json
         return save_new_project(data=data)
 
-
+#TODO - Ensure that only admin users can create projects
 @api.route('/<project_id>')
 @api.param('project_id', 'The Project identifier')
 @api.response(404, 'Project not found.')

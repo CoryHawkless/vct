@@ -10,13 +10,13 @@ from typing import Dict, Tuple
 
 def save_new_project(data: Dict[str, str]) -> Tuple[Dict[str, str], int]:
     new_project = Project(
-        id=str(uuid.uuid4()),
+        # id=str(uuid.uuid4()),
         name=data['name'],
         description=data['description'],
         created_at=datetime.datetime.utcnow()
     )
     save_changes(new_project)
-    return new_project
+    return flask.jsonify(new_project.to_dict())
 
 
 

@@ -13,10 +13,11 @@ class Auth:
             if user and user.check_password(data.get('password')):
                 auth_token = User.encode_auth_token(user.id)
                 if auth_token:
+                    # print("Issued token {}".format(auth_token))
                     response_object = {
                         'status': 'success',
                         'message': 'Successfully logged in.',
-                        'Authorization': auth_token.decode()
+                        'Authorization': str(auth_token)
                     }
                     return response_object, 200
             else:

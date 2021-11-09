@@ -1,5 +1,6 @@
 from functools import wraps
 from flask import request, abort
+from app.main.controller.project_controller import Project
 from app.main.service.auth_helper import Auth
 from app.main.model.role_assignment import RoleAssignment
 from typing import Callable
@@ -109,4 +110,31 @@ def role_required(desired_roles: list):
 
             return func(*args, **kwargs)
         return wrapper
+    return decorated
+
+
+"""
+User must have role 'admin' on project 'admin'
+"""
+def admin_required(self):
+    def decorated(func):
+        print("zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz")
+    
+        user = Auth.get_logged_in_user(request)
+        admin_project=Project.query.filter_by(name="admin").first()
+
+        print("This route requires user {} to have role 'ADMIN' on project ADMIN(Project ID:{})".format(user.username,admin_project.id))
+        this_users_roles=RoleAssignment.query.filter_by(user_id=user.id,project_id=admin_project.id).all()
+
+        role_found=False
+        for this_role in this_users_roles:
+            if this_role.role in ['admin']:
+                print("Role found :)")
+                role_found=True
+        if not role_found:
+            response="Permission Denied. You do not have the necessary role 'ADMIN' for project ID " +str(admin_project.id)
+            abort(401,response)
+
+        return func(*args, **kwargs)
+        
     return decorated

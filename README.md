@@ -39,3 +39,6 @@ Make sure to run the initial migration commands to update the database.
 
 ### Reference article ###
 https://medium.freecodecamp.org/structuring-a-flask-restplus-web-service-for-production-builds-c2ec676de563
+
+
+docker run -d -p 3306:3306 --name dbserver -eMARIADB_ROOT_PASSWORD=password -eMARIADB_DATABASE=newstack mariadb:latest

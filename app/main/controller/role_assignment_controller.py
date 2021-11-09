@@ -11,7 +11,7 @@ api = RoleAssignmentDto.api
 _role_assignment = RoleAssignmentDto.role_assignment
 
 
-
+#TODO - Adjust the url to be role_assignments/userid/ and not require the userid in the body of the request
 @api.route('/')
 class RoleAssignmentListForUser(Resource):
     @token_required

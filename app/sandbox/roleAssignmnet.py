@@ -33,7 +33,7 @@ with app.app_context():
     new_role_assignment = RoleAssignment(
         user_id=1,
         project_id=4,
-        role="god"
+        role="admin"
     )
 
     new_role_assignment.save()

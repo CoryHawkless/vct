@@ -4,18 +4,15 @@ from random import randrange
 from app.main.model.volume_type import Volume_Type
 from app.main.model.volume import Volume
 from app.main.model.user import User
+from app.main.model.project import Project
+from app.main.model.role_assignment import RoleAssignment
 from app.main import db, create_app
 
 app = create_app('dev')
-x="1a"
 
 
 
 
 with app.app_context():
-    newUser=User()
-    newUser.email="joe1@none.com"
-    newUser.password="password"
-    newUser.username="joe1"
-    newUser.admin=1
-    newUser.save()
+    this_users_roles=RoleAssignment.query.filter_by(user_id=1,project_id=1).all()
+    print(this_users_roles)
