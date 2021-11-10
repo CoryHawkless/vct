@@ -1,13 +1,13 @@
 import os
 import unittest
 
-from flask.cli import FlaskGroup
+from flask.cli import FlaskGroup, main
 from flask_migrate import Migrate
 
 from app import blueprint
 from app.main import create_app, db
 
-app = create_app(os.getenv('FLASK_ENV') or 'dev')
+app = create_app(os.getenv('BOILERPLATE_ENV') or 'dev')
 app.register_blueprint(blueprint)
 migrate = Migrate(app, db)
 
@@ -18,8 +18,7 @@ cli = FlaskGroup(app)
 
 @cli.command('run')
 def run():
-    print("Running app")
-    app.run(port=5002, host="0.0.0.0",debug=True)
+    main()
 
 
 @cli.command('test')
@@ -32,10 +31,5 @@ def test():
     return 1
 
 
-@cli.command('test_proj')
-def test_proj():
-    import app.sandbox.projects
-
-
 if __name__ == '__main__':
-    app.run(port=5002, host="0.0.0.0")
+    cli()
