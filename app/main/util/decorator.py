@@ -1,8 +1,8 @@
 from functools import wraps
 from flask import request, abort
-from app.main.controller.project_controller import Project
 from app.main.service.auth_helper import Auth
 from app.main.model.role_assignment import RoleAssignment
+from app.main.model.volume import Volume
 from typing import Callable
 
 """
@@ -94,8 +94,99 @@ def role_required(desired_roles: list):
                     'message': 'Project ID not supplied',
                 }
                 return response_object, 401
+            if len(str(data['project_id'])) ==0 :
+                print("This route requires user {} to have role '{}'".format(user.username, desired_roles))
+                this_users_roles = RoleAssignment.query.filter_by(user_id=user.id).all()
 
-            project_id=data['project_id']
+                role_found = False
+                for this_role in this_users_roles:
+                    if this_role.role in desired_roles:
+                        print("Role found :)")
+                        role_found = True
+                if not role_found:
+                    response = "Permission Denied. You do not have the necessary role '" + str(
+                        desired_roles) + "' for providing role access "
+                    abort(401, response)
+            else:
+                project_id=int(data['project_id'])
+                print("This route requires user {} to have role '{}' on project #{}".format(user.username,desired_roles,project_id))
+                this_users_roles=RoleAssignment.query.filter_by(user_id=user.id, project_id=project_id).all()
+
+                role_found=False
+                for this_role in this_users_roles:
+                    if this_role.role in desired_roles:
+                        print("Role found :)")
+                        role_found=True
+                if not role_found:
+                    response="Permission Denied. You do not have the necessary role '" + str(desired_roles) + "' for project ID " +str(project_id)
+                    abort(401,response)
+
+            return func(*args, **kwargs)
+        return wrapper
+    return decorated
+
+
+"""
+Desired roles is a list of roles, ANY of which will result in a PASS, making this an OR list
+for an AND list, repeat the decorator
+"""
+def project_role_required(desired_roles: list):
+    def decorated(func):
+        @wraps(func)
+        def wrapper(*args, **kwargs):
+            user = Auth.get_logged_in_user(request)
+            # project_id=data['project_id']
+            # print("This route requires user {} to have role '{}' on project #{}".format(user.username,desired_roles,project_id))
+            if desired_roles[0]=="admin":
+                this_users_roles=RoleAssignment.query.filter_by(user_id=user.id).all()
+
+                role_found=False
+                for this_role in this_users_roles:
+                    if this_role.role in desired_roles:
+                        print("Role found :)")
+                        role_found=True
+                if not role_found:
+                    response="Permission Denied. You do not have the necessary role '" + str(desired_roles) + "' for creating project"
+                    abort(401,response)
+
+            if desired_roles[0]=="delete_project":
+                if not 'project_id' in request.view_args:
+                    response_object = {
+                        'status': 'fail',
+                        'message': 'Project ID not supplied',
+                    }
+                    return response_object, 401
+
+                this_users_roles=RoleAssignment.query.filter_by(user_id=user.id, project_id = int(request.view_args['project_id'])).all()
+
+                role_found=False
+                for this_role in this_users_roles:
+                    if this_role.role in desired_roles:
+                        print("Role found :)")
+                        role_found=True
+                if not role_found:
+                    response="Permission Denied. You do not have the necessary role '" + str(desired_roles) + "' for creating project"
+                    abort(401,response)
+
+            return func(*args, **kwargs)
+        return wrapper
+    return decorated
+
+
+def specific_role_required_for_volume(desired_roles: list):
+    def decorated(func):
+        @wraps(func)
+        def wrapper(*args, **kwargs):
+            data = request.json
+            user = Auth.get_logged_in_user(request)
+            if not 'volume_id' in request.view_args:
+                response_object = {
+                    'status': 'fail',
+                    'message': 'Volume ID not supplied',
+                }
+                return response_object, 401
+
+            project_id=Volume.query.filter_by(id= request.view_args['volume_id']).first().project_id
             print("This route requires user {} to have role '{}' on project #{}".format(user.username,desired_roles,project_id))
             this_users_roles=RoleAssignment.query.filter_by(user_id=user.id,project_id=project_id).all()
 
@@ -110,31 +201,4 @@ def role_required(desired_roles: list):
 
             return func(*args, **kwargs)
         return wrapper
-    return decorated
-
-
-"""
-User must have role 'admin' on project 'admin'
-"""
-def admin_required(self):
-    def decorated(func):
-        print("zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz")
-    
-        user = Auth.get_logged_in_user(request)
-        admin_project=Project.query.filter_by(name="admin").first()
-
-        print("This route requires user {} to have role 'ADMIN' on project ADMIN(Project ID:{})".format(user.username,admin_project.id))
-        this_users_roles=RoleAssignment.query.filter_by(user_id=user.id,project_id=admin_project.id).all()
-
-        role_found=False
-        for this_role in this_users_roles:
-            if this_role.role in ['admin']:
-                print("Role found :)")
-                role_found=True
-        if not role_found:
-            response="Permission Denied. You do not have the necessary role 'ADMIN' for project ID " +str(admin_project.id)
-            abort(401,response)
-
-        return func(*args, **kwargs)
-        
     return decorated

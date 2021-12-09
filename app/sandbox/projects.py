@@ -15,4 +15,5 @@ app = create_app('dev')
 
 with app.app_context():
     this_users_roles=RoleAssignment.query.filter_by(user_id=1,project_id=1).all()
-    print(this_users_roles)
+    # print(this_users_roles)
+    print(Project.query.filter_by(name="admin").first().id)

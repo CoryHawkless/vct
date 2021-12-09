@@ -4,17 +4,15 @@ from sqlalchemy.ext.declarative import declared_attr
 
 
 class Volume(db.Model,commonModelAttributes.CommonModelAttributes):
-    """ Volume Model for storing volume related details """
+    """ Store volume related details """
     __tablename__ = "volumes"
 
-    name =                      db.Column(db.String(128))
-    description =               db.Column(db.String(256))
-    type_id =                   db.Column(db.Integer, db.ForeignKey('volume_types.id'),
-                                    nullable=False)
-    size =                      db.Column(db.Integer,nullable=False,default=0)
-    name_on_disk =              db.Column(db.String(256),nullable=False)
-    project_id =                db.Column(db.Integer, db.ForeignKey('projects.id'),
-                                    nullable=False)
+    name = db.Column(db.String(128))
+    description = db.Column(db.String(256))
+    type_id = db.Column(db.Integer, db.ForeignKey('volume_types.id'), nullable=False)
+    size = db.Column(db.Integer,nullable=False,default=0)
+    status = db.Column(db.String(256),nullable=False)
+    project_id = db.Column(db.Integer, db.ForeignKey('projects.id'), nullable=False)
 
 
     def __repr__(self):

@@ -6,12 +6,9 @@ class RoleAssignment(db.Model,commonModelAttributes.CommonModelAttributes):
     """ RoleAssignment Model for storing volume related details """
     __tablename__ = "role_assignments"
 
-    user_id =                   db.Column(db.Integer, db.ForeignKey('user.id'),
-                                    nullable=False)
-    role =                      db.Column(db.String(256),nullable=False)
-    active =                      db.Column(db.Boolean(),nullable=False,default=True)
-    project_id =                db.Column(db.Integer, db.ForeignKey('projects.id'),
-                                    nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    role = db.Column(db.String(256), nullable=False)
+    project_id = db.Column(db.Integer, db.ForeignKey('projects.id'), nullable=True)
 
     def __repr__(self):
         return "<RoleAssignment '{}'>".format(self.id)

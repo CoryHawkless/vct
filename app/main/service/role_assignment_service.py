@@ -13,7 +13,7 @@ def save_new_role_assignment(request: flask.request) -> Tuple[Dict[str, str], in
     # Validate that role_name, project_id and user_id are present in the request and they are valid integers or strings
     try:
         _role=data['role']
-        _project_id=data['project_id']
+        _project_id=None if len(str(data['project_id']))==0 else data['project_id']
         _user_id=data['user_id']
     except:
         response_object = {
@@ -23,7 +23,7 @@ def save_new_role_assignment(request: flask.request) -> Tuple[Dict[str, str], in
         return response_object, 401
 
     try:
-        is_num = int(_project_id)
+        is_num = None if len(str(data['project_id']))==0 else int(_project_id)
     except:
         response_object = {
             'status': 'fail',

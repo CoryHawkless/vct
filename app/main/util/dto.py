@@ -6,8 +6,7 @@ class UserDto:
     user = api.model('user', {
         'email': fields.String(required=True, description='user email address'),
         'username': fields.String(required=True, description='user username'),
-        'password': fields.String(required=True, description='user password'),
-        'public_id': fields.String(description='user Identifier')
+        'password': fields.String(required=True, description='user password')
     })
 
 class AuthDto:
@@ -21,7 +20,8 @@ class AuthDto:
 class ProjectDto:
     api = Namespace('project', description='Project related operations')
     project = api.model('project', {
-        'id': fields.Integer(required=True, description='Project ID'),
+        'id': fields.Integer(description='Project ID'),
+        'status': fields.String(description='Project status'),
         'created_at': fields.DateTime(description='Created Timestamp'),
         'deleted_at': fields.DateTime(description='Deleted Timestamp'),
         'name': fields.String(required=True, description='Volume Type name'),
@@ -31,7 +31,6 @@ class ProjectDto:
 class VolumeDto:
     api = Namespace('volumes', description='Volume related operations')
     volume = api.model('volume', {
-        'id': fields.Integer(required=True, description='Project ID'),
         'created_at': fields.DateTime(description='Created Timestamp'),
         'deleted_at': fields.DateTime(description='Deleted Timestamp'),
         'name': fields.String(required=True, description='Volume name'),
@@ -59,14 +58,14 @@ class VolumeTypeDto:
     api = Namespace('volume_types', description='Volume Types related operations')
     volume_type = api.model('volume_type', {
         'id': fields.Integer(required=True, description='Project ID'),
-        'created_at': fields.DateTime(description='Created Timestamp',read_only=True),
+        'created_at': fields.DateTime(description='Created Timestamp'),
         'deleted_at': fields.DateTime(description='Deleted Timestamp'),
         'name': fields.String(required=True, description='Volume Type name'),
     })
 
 class RoleAssignmentDto:
-    api = Namespace('role_assignments', description='Roles assigned to users')
-    role_assignment = api.model('role_assignments', {
+    api = Namespace('role_asignment', description='Roles assigned to users')
+    role_assignment = api.model('role_asignment', {
         'id': fields.Integer(required=True, description='Project ID'),
         'created_at': fields.DateTime(description='Created Timestamp',read_only=True),
         'deleted_at': fields.DateTime(description='Deleted Timestamp'),

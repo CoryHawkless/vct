@@ -9,14 +9,14 @@ clean:
 install:
 	virtualenv venv; \
 	. venv/bin/activate; \
-	pip3 install -r requirements.txt; \
+	pip install -r requirements.txt;
 
 tests:
 	. venv/bin/activate; \
-	python3 manage.py test
+	python manage.py test
 
 run:
 	. venv/bin/activate; \
-	python3 manage.py run
+	python manage.py run
 
 all: clean install tests run

@@ -1,4 +1,4 @@
-# newStack API
+# WebServer API
 An open source solution to the complexities of manaing virtual infrastrucuture
 Very opinionated VM\ Networking and storage orchestration system. By being strongly opinionated we can elimate significant amounts of complexity, this is not a 'one-size-fits-all' solution. It does what it does and nothing else, but this keep the code base clean, simple and stable
 
@@ -28,6 +28,10 @@ Make sure to run the initial migration commands to update the database.
     http://127.0.0.1:5000/
 
 
+### Run Test case ####
+
+    python test.py
+
 ### Using Postman ####
 
     Authorization header is in the following format:
@@ -37,8 +41,15 @@ Make sure to run the initial migration commands to update the database.
 
     Postman examples in postman folder
 
+### Update Database Details
+
+    update database details inside config.py(main/config.py) file
+    
+    mysql+pymysql://<user>:<password>@<host>/<db name>'
+
+    ex: mysql+pymysql://root:password@localhost/predictive_analysis'
+
+
+    Initial installation: make install
 ### Reference article ###
 https://medium.freecodecamp.org/structuring-a-flask-restplus-web-service-for-production-builds-c2ec676de563
-
-
-docker run -d -p 3306:3306 --name dbserver -eMARIADB_ROOT_PASSWORD=password -eMARIADB_DATABASE=newstack mariadb:latest

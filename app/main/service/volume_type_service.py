@@ -1,4 +1,4 @@
-from datetime import datetime
+import datetime
 
 import flask
 
@@ -13,7 +13,6 @@ def save_new_volume_type(data: Dict[str, str]) -> Tuple[Dict[str, str], int]:
     if not volume_type:
         new_volume_type = Volume_Type(
             name=data['name'],
-            size=data['name'],
             created_at=datetime.datetime.utcnow()
 
         )
